@@ -2,8 +2,13 @@
 import sys
     
 sys.stdout = open('output.txt', 'wt')
-def n(a) :
-      if a%2==0:
-            return "Even Number"
-print(n(4))
+try:
+    print(""" techie_programmer bro
+    
+    I'm go through the tutorial you shared 
+    
+    I think it will work 😅 """)
+
+except Exception as e: print(e)
+
             

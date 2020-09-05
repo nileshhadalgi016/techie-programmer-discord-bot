@@ -42,11 +42,16 @@ def pyhton_exe(arg):
     with open('code.py','w') as code:
         arg = str(arg).replace('“','"')
         arg = str(arg).replace('”','"')
+        arg = arg.replace('\n','\n    ')
         text = f"""
 import sys
     
 sys.stdout = open('output.txt', 'wt')
-{arg}
+try:
+    {arg}
+
+except Exception as e: print(e)
+
             """
         code.write(text)
 
@@ -93,7 +98,7 @@ async def binod(ctx):
     await ctx.send(binodw())
 
 @client.command()
-async def script(ctx, *, arg):
+async def py(ctx, *, arg):
     await ctx.send(pyhton_exe(arg))
 
 @client.command()
@@ -112,4 +117,4 @@ async def wiki(ctx,*,arg):
 async def covid_news(ctx,*,arg):
     await ctx.send(covid(arg))
 
-client.run('api key ')
+client.run('api key')
