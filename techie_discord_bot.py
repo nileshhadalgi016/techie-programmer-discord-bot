@@ -59,4 +59,4 @@ sys.stdout = open('output.txt', 'wt')
             arg = arg + ''.join(op)
         await ctx.send(arg)
 
-client.run('NzUxMzY1MDM4NjE0NTExNjI2.X1IBOA.5H8tVrv34e7ErN57Y7BzLg95Rm4')
+client.run('api key')
