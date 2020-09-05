@@ -37,6 +37,30 @@ def covid(arg):
     # for x in cases:
     #     k=x,":",cases[x]
     return(cases)
+
+def pyhton_exe(arg):
+    with open('code.py','w') as code:
+        arg = str(arg).replace('“','"')
+        arg = str(arg).replace('”','"')
+        text = f"""
+import sys
+    
+sys.stdout = open('output.txt', 'wt')
+{arg}
+            """
+        code.write(text)
+
+    os.system('python3 code.py')
+
+    with open('output.txt') as output:
+        l = output.readlines()
+        arg=''
+        for op in l:
+            arg = arg + ''.join(op)
+
+    return arg
+
+
 client = commands.Bot(command_prefix=">")
 
 @client.event
@@ -70,25 +94,7 @@ async def binod(ctx):
 
 @client.command()
 async def script(ctx, *, arg):
-    with open('code.py','w') as code:
-        arg = str(arg).replace('“','"')
-        arg = str(arg).replace('”','"')
-        text = f"""
-import sys
-    
-sys.stdout = open('output.txt', 'wt')
-{arg}
-            """
-        code.write(text)
-
-    os.system('python3 code.py')
-
-    with open('output.txt') as output:
-        l = output.readlines()
-        arg=''
-        for op in l:
-            arg = arg + ''.join(op)
-        await ctx.send(arg)
+    await ctx.send(pyhton_exe(arg))
 
 @client.command()
 async def img(ctx):
@@ -105,4 +111,5 @@ async def wiki(ctx,*,arg):
 @client.command()
 async def covid_news(ctx,*,arg):
     await ctx.send(covid(arg))
-client.run('api key')
+
+client.run('api key ')
