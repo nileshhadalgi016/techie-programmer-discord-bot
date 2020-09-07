@@ -6,8 +6,13 @@ import wikipedia
 from animals import Animals
 import emojis
 from covid import Covid
+import pywhatkit as kit
+import requests
+from googletrans import Translator
+from imdb import IMDb
+import pyfiglet
 import os
-
+l=[]
 def hellow():
     return "print('hello world')"
 def binodw():
@@ -27,8 +32,9 @@ def quotes1():
     l=str(persons[1])
     k=emojis.encode(":sunny:")
     return l+k*2
-
-
+def fig(text):
+    word=pyfiglet.figlet_format(text)
+    return word
 def covid(arg):
     case=str(arg)
     #covid=Covid(source="worldometers")
@@ -37,6 +43,35 @@ def covid(arg):
     # for x in cases:
     #     k=x,":",cases[x]
     return(cases)
+url = "https://corona-virus-world-and-india-data.p.rapidapi.com/api_india"
+
+headers = {
+    'x-rapidapi-host': "corona-virus-world-and-india-data.p.rapidapi.com",
+    'x-rapidapi-key': "051f196884mshb0072b49d1b1d36p1662d4jsn3677a45333ad"
+    }
+
+response = requests.request("GET", url, headers=headers).json()
+
+def search_by_city(city_name):
+    for each in response["state_wise"]:
+        if int(response['state_wise'][each]['active'])!=0:
+            for city in response['state_wise'][each]['district']:
+                if city.lower()==city_name:
+                    return(city,response['state_wise'][each]['district'][city]['active'])
+
+def t1(ip):
+    translator=Translator()
+    n=translator.translate(ip)
+    return n
+def im1(m1):
+    im=IMDb()
+    s=im.get_top250_movies()
+    if(m1<20):
+        for i in range(m1):
+            l.append(s[i])
+    else:
+        l.append(0)
+    return l
 
 def pyhton_exe(arg):
     with open('code.py','w') as code:
@@ -116,5 +151,16 @@ async def wiki(ctx,*,arg):
 @client.command()
 async def covid_news(ctx,*,arg):
     await ctx.send(covid(arg))
-
+@client.command()
+async def covid_india(ctx,*,arg):
+    await ctx.send(search_by_city(arg))
+@client.command()
+async def lang(ctx,*,arg):
+    await ctx.send(t1(arg))
+@client.command()
+async def imdb_top(ctx,*,arg):
+    await ctx.send(im1(int(arg)))
+@client.command()
+async def txt(ctx,*,arg):
+    await ctx.send(fig(str(arg)))
 client.run('api key')
