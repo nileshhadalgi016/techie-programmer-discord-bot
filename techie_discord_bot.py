@@ -35,6 +35,31 @@ def quotes1():
 def fig(text):
     word=pyfiglet.figlet_format(text)
     return word
+from pycricbuzz import Cricbuzz
+import json
+c = Cricbuzz()
+matches = c.matches()
+#print (json.dumps(matches,indent=4))
+
+def live_score(mid):
+    c = Cricbuzz()
+    lscore = c.livescore(mid)
+    return (json.dumps(lscore,indent=1))
+
+def scorecard1(mid):
+    c = Cricbuzz()
+    scard = c.scorecard(mid)
+    #print(scard)
+    return (scard)
+
+def match_info(mid):
+    c = Cricbuzz()
+    minfo = c.matchinfo(mid)
+    return(json.dumps(minfo,indent=1))
+def commentary(mid):
+    c = Cricbuzz()
+    comm = c.commentary(mid)
+    return(comm)
 def covid(arg):
     case=str(arg)
     #covid=Covid(source="worldometers")
@@ -160,6 +185,18 @@ async def lang(ctx,*,arg):
 @client.command()
 async def imdb_top(ctx,*,arg):
     await ctx.send(im1(int(arg)))
+@client.command()
+async def livescore(ctx,*,arg):
+    await ctx.send(live_score(str(arg)))
+@client.command()
+async def score_card(ctx,*,arg):
+    await ctx.send(scorecard1(str(arg)))
+@client.command()
+async def matchinfo(ctx,*,arg):
+        await ctx.send(match_info(str(arg)))
+@client.command()
+async def comtry_box(ctx,*,arg):
+    await ctx.send(commentary(str(arg)))
 @client.command()
 async def txt(ctx,*,arg):
     await ctx.send(fig(str(arg)))
