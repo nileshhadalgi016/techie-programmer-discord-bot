@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from PIL import Image, ImageDraw, ImageFont
 import pyjokes
 from quotes import Quotes
 import wikipedia
@@ -200,4 +201,40 @@ async def comtry_box(ctx,*,arg):
 @client.command()
 async def txt(ctx,*,arg):
     await ctx.send(fig(str(arg)))
+
+## MEMEs SECTION ##    
+
+@client.command(name='boss')
+async def boss_meme(ctx, *users: discord.User):
+    users = list(users)
+    template = Image.open(r'memes/meme_boss.jpg')
+    boss = Image.open(requests.get(ctx.message.author.avatar_url, stream=True).raw).resize((120, 120))
+    noob = Image.open(requests.get(users[0].avatar_url, stream=True).raw).resize((120, 120))
+    challenger = Image.open(requests.get(users[1].avatar_url, stream=True).raw).resize((120, 120))
+    Image.Image.paste(template, challenger, (335, 50))
+    Image.Image.paste(template, noob, (500, 385))
+    Image.Image.paste(template, boss, (355, 710))
+    template.save('meme_boss.jpg')
+    await ctx.send(file=discord.File('meme_boss.jpg'))
+    os.remove('meme_boss.jpg')
+
+@client.command(name='thakgayahu')
+async def meme_vroo(ctx, *text):
+    message = ' '.join(list(message)).upper()
+    if len(message) > 32:
+        await ctx.send("``` Message Must Be Lower Than 32 Characters ```")
+    else:
+        template = Image.open(r'memes/meme_vro.jpg')
+        user = Image.open(requests.get(ctx.message.author.avatar_url, stream=True).raw).resize((114, 114))
+        Image.Image.paste(template, user, (321, 117))
+
+        image = ImageDraw.Draw(template)
+        font = ImageFont.truetype('memes/vroo_font.ttf', 50)
+        # ADDS A SHADOW EFFECT TO THE TEXT
+        image.text((5, 405), message, fill=(0, 0, 0), font=font)
+        image.text((10, 410), message, fill=(255, 255, 255), font=font)
+        template.save('meme_vroo.jpg')
+        await ctx.send(file=discord.File('meme_vroo.jpg'))
+        os.remove('meme_vroo.jpg')
+    
 client.run('api key')
