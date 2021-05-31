@@ -206,6 +206,9 @@ async def txt(ctx,*,arg):
 
 @client.command(name='boss')
 async def boss_meme(ctx, *users: discord.User):
+    """
+    >boss <mention_user_1> <mention_user_2>
+    """
     users = list(users)
     template = Image.open(r'memes/meme_boss.jpg')
     boss = Image.open(requests.get(ctx.message.author.avatar_url, stream=True).raw).resize((120, 120))
@@ -220,7 +223,10 @@ async def boss_meme(ctx, *users: discord.User):
 
 @client.command(name='thakgayahu')
 async def meme_vroo(ctx, *text):
-    message = ' '.join(list(message)).upper()
+    """
+    >thakgayahu <message>
+    """"
+    message = ' '.join(list(text)).upper()
     if len(message) > 32:
         await ctx.send("``` Message Must Be Lower Than 32 Characters ```")
     else:
@@ -236,5 +242,33 @@ async def meme_vroo(ctx, *text):
         template.save('meme_vroo.jpg')
         await ctx.send(file=discord.File('meme_vroo.jpg'))
         os.remove('meme_vroo.jpg')
+
+@bot.command(name='nothisbut')
+async def meme_vroo(ctx, user : discord.User, *message):
+    """
+    >nothisbut <mention_user> <message 1>, <message 2>
+    """"
+    message = ' '.join(list(message)).upper()
+    up_txt = message.split(',')[0].replace(' ', '\n')
+    dw_txt = message.split(',')[1].replace(' ', '\n')
+    if message.split(',')[0] and message.split(',')[1] > 32:
+        await ctx.send("``` Each Message Must Be Lower Than 32 Characters ```")
+    else:
+        template = Image.open(r'memes/meme_drake.jpg')
+        user = Image.open(requests.get(user.avatar_url, stream=True).raw).resize((70, 70))
+        Image.Image.paste(template, user, (23, 55))
+        Image.Image.paste(template, user, (119, 267))
+
+        image = ImageDraw.Draw(template)
+        font = ImageFont.truetype('memes/vroo_font.ttf', 30)
+        # ADDS A SHADOW EFFECT TO THE TEXT
+        image.text((256, 0), up_txt, fill=(255, 255, 0), font=font)
+        image.text((259, 3), up_txt, fill=(0, 0, 0), font=font)
+
+        image.text((256, 251), dw_txt, fill=(255, 255, 0), font=font)
+        image.text((259, 254), dw_txt, fill=(0, 0, 0), font=font)
+        template.save('meme_drake.jpg')
+        await ctx.send(file=discord.File('meme_drake.jpg'))
+        os.remove('meme_drake.jpg')
     
 client.run('api key')
