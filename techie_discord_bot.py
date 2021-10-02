@@ -225,7 +225,7 @@ async def boss_meme(ctx, *users: discord.User):
 async def meme_vroo(ctx, *text):
     """
     >thakgayahu <message>
-    """"
+    """
     message = ' '.join(list(text)).upper()
     if len(message) > 32:
         await ctx.send("``` Message Must Be Lower Than 32 Characters ```")
@@ -247,7 +247,7 @@ async def meme_vroo(ctx, *text):
 async def meme_vroo(ctx, user : discord.User, *message):
     """
     >nothisbut <mention_user> <message 1>, <message 2>
-    """"
+    """
     message = ' '.join(list(message)).upper()
     up_txt = message.split(',')[0].replace(' ', '\n')
     dw_txt = message.split(',')[1].replace(' ', '\n')
